@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>滕云凤 - 算法工程师简历</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .auth-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .auth-box h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .auth-box p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .auth-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .auth-error {
+            color: #e74c3c;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .content-hidden {
+            display: none;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .header .job-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            flex-wrap: wrap;
+        }
+
+        .header .contact {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            font-size: 0.95em;
+            opacity: 0.95;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon {
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .icon-email {
+            background: white;
+            border-radius: 3px;
+            position: relative;
+        }
+
+        .icon-email::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 14px;
+            height: 10px;
+            border: 2px solid currentColor;
+            border-radius: 2px;
+        }
+
+        .icon-email::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(0deg);
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-top: 6px solid currentColor;
+            margin-top: -3px;
+        }
+
+        .icon-phone {
+            position: relative;
+        }
+
+        .icon-phone::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 4px;
+            width: 10px;
+            height: 14px;
+            border: 2px solid white;
+            border-radius: 2px;
+        }
+
+        .icon-phone::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 7px;
+            width: 4px;
+            height: 1px;
+            background: white;
+            border-radius: 1px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.6em;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .section-title::before {
+            content: "▶";
+            font-size: 0.7em;
+        }
+
+        .item {
+            margin-bottom: 25px;
+            padding-left: 20px;
+            border-left: 3px solid #e0e0e0;
+            transition: border-color 0.3s;
+        }
+
+        .item:hover {
+            border-left-color: #667eea;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .item-title {
+            font-size: 1.15em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .item-subtitle {
+            color: #667eea;
+            font-weight: 600;
+            margin-left: 15px;
+        }
+
+        .item-date {
+            color: #666;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+
+        .item-content {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .item-content ul {
+            margin-left: 20px;
+            margin-top: 8px;
+        }
+
+        .item-content li {
+            margin-bottom: 6px;
+        }
+
+        .project-item {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .project-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 12px;
+        }
+
+        .project-content {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .project-content p {
+            margin-bottom: 10px;
+        }
+
+        .project-content ul {
+            margin-left: 20px;
+        }
+
+        .project-content li {
+            margin-bottom: 6px;
+        }
+
+        .project-content strong {
+            color: #333;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .skill-category {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+
+        .skill-category h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+
+        .skill-category p {
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .advantage-grid {
+            display: block;
+        }
+
+        .advantage-card {
+            background: #f8f9fa;
+            padding: 20px;
+            padding-left: 20px;
+            border-radius: 0;
+            border-left: 3px solid #667eea;
+            transition: border-color 0.3s;
+            position: relative;
+            overflow: visible;
+            margin-bottom: 20px;
+        }
+
+        .advantage-card::before {
+            display: none;
+        }
+
+        .advantage-card:hover {
+            transform: none;
+            box-shadow: none;
+            border-left-color: #764ba2;
+        }
+
+        .advantage-card:hover::before {
+            transform: none;
+        }
+
+        .advantage-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            position: relative;
+            z-index: 1;
+            font-weight: 600;
+        }
+
+        .advantage-card p {
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 10px;
+        }
+
+        .project-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 40px;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2em;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .slide-item {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+
+        .slide-item h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .slide-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .slide-item img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .item-header {
+                flex-direction: column;
+            }
+
+            .item-subtitle {
+                margin-left: 0;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 密码验证界面 -->
+    <div id="authOverlay" class="auth-overlay">
+        <div class="auth-box">
+            <h2>访问验证</h2>
+            <p>请输入访问密码查看简历</p>
+            <input type="password" id="passwordInput" class="auth-input" placeholder="请输入密码" autocomplete="off">
+            <button onclick="verifyPassword()" class="auth-btn">确认</button>
+            <p id="authError" class="auth-error">密码错误，请重试</p>
+        </div>
+    </div>
+
+    <div id="mainContent" class="content-hidden">
+    <div class="container">
+        <!-- 个人信息 -->
+        <div class="header">
+            <h1>滕云凤</h1>
+            <div class="job-info">
+                <span>岗位：算法工程师 | 经验：8年 | 邮箱：18363992445@163.com | 电话：18363992445</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- 教育经历 -->
+            <div class="section">
+                <h2 class="section-title">教育经历</h2>
+                <div class="item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-title">青岛大学</span>
+                            <span class="item-subtitle">本科 · 应用统计学</span>
+                            <span style="color: #999; margin-left: 10px; font-size: 0.9em;">(分数：85/100)</span>
+                        </div>
+                        <span class="item-date">2013 - 2017</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 工作经历 -->
+            <div class="section">
+                <h2 class="section-title">工作经历</h2>
+
+                <div class="item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-title">青岛智运轨道科技有限公司</span>
+                            <span class="item-subtitle">算法工程师</span>
+                        </div>
+                        <span class="item-date">2025.06 - 今</span>
+                    </div>
+                    <div class="item-content">
+                        <ul>
+                            <li>负责轨道交通行业垂域大模型的数据构建、模型微调与RAG系统优化工作</li>
+                            <li>主导青岛地铁非结构化数据的抽取与清洗，产出标注数据，基于Qwen3-32B完成模型微调与效果验证</li>
+                            <li>迭代优化RAG流程算法，对Embedding/Reranker模型、Chunking方法及Milvus向量库进行评测与调优</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-title">Apple Inc.</span>
+                            <span class="item-subtitle">算法工程师 (MQA)</span>
+                        </div>
+                        <span class="item-date">2022.06 - 2024.12</span>
+                    </div>
+                    <div class="item-content">
+                        <ul>
+                            <li>负责苹果全系列产品（iPhone / Mac / iPad / Watch等）生产与质量数据的审核、分析及算法支持</li>
+                            <li>主导基于数据可视化、统计分析、机器学习与图像算法的质量审核方案设计与开发，识别供应商生产异常与数据不合规问题，并在多家核心供应商现场落地</li>
+                            <li>推动质量审核流程数字化，引入大语言模型与自动化方案，优化审核流程，提高审核效率并降低人力成本</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-title">烟台创迹软件有限公司</span>
+                            <span class="item-subtitle">数据分析师</span>
+                        </div>
+                        <span class="item-date">2020.11 - 2022.03</span>
+                    </div>
+                    <div class="item-content">
+                        <ul>
+                            <li>负责日本连锁超市Trial的商品与交易数据分析，支持进货策略与营销活动评估</li>
+                            <li>参与智能购物车优惠券推荐模型的设计与验证，提升购物场景下的推荐转化效果</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="item-header">
+                        <div>
+                            <span class="item-title">青岛中瑞汽车服务有限公司</span>
+                            <span class="item-subtitle">数据产品经理</span>
+                        </div>
+                        <span class="item-date">2018.03 - 2020.11</span>
+                    </div>
+                    <div class="item-content">
+                        <ul>
+                            <li>主导车联网相关数据分析与算法建模，基于GPS行为数据构建风控与UBI模型，用于逾期风险与出险概率预测，支持金融与保险客户的风险评估</li>
+                            <li>负责车主画像系统与监管数据看板的指标体系设计和数据产品设计</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 项目经历 -->
+            <div class="section">
+                <h2 class="section-title">项目经历</h2>
+
+                <div class="project-item">
+                    <h3 class="project-title">青岛智运 | 轨道交通行业垂域大模型</h3>
+                    <div class="project-content">
+                        <p><strong>数据构建：</strong>通过MinerU解析国标、团标、企标等非结构化文档并提取问答对；推动青岛地铁多专业故障检修思维链数据撰写，建立数据质量优化流程，形成高质量微调训练数据。</p>
+                        <p><strong>模型微调：</strong>基于问答对与思维链数据对Qwen3-32B进行指令微调，经专业测试集验证，<span class="highlight">多专业任务性能提升2%~9%</span>。</p>
+                        <p><strong>RAG优化：</strong>迭代RAG流程算法，完成Embedding / Reranker模型评测选型，父子索引Chunking方法优化，并对Milvus数据库索引、分区与检索性能进行系统测试。</p>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <h3 class="project-title">Apple | 结构化数据审核算法：供应商生产数据审核</h3>
+                    <div class="project-content">
+                        <p>基于统计分析与机器学习方法（假设检验、ANOVA、PCA / t-SNE、K-means / DBSCAN、AE异常检测等），审核供应商产品测量、生产记录与可靠性测试数据。</p>
+                        <p>识别生产不合规与数据造假问题，各产品大类（iPhone / Mac / iPad / Watch / Audio / Materials等）<span class="highlight">每月发现1～2个重大质量风险</span>。</p>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <h3 class="project-title">Apple | 自然语言处理：审核记录知识库与Agent</h3>
+                    <div class="project-content">
+                        <li><strong>动态审核知识库（RAG）：</strong>集成BM25、微调Transformer-MiniLM、Apple LLM搭建初级检索层，MiniLM做重排序，结合匹配相似度、问题权重动态调整审核方案。</li>
+                        <li><strong>智能解决方案Agent：</strong>基于Prompt工程和RAG，对新增审核问题进行表述优化，自动匹配历史相似问题并推荐原因分析与解决方案。</li>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <h3 class="project-title">Apple | 图像算法：产品缺陷检验与图像审核</h3>
+                    <div class="project-content">
+                        <ul>
+                            <li>为Home Pod设计基于LBP、DFS的外观检测算法，替代人工检测上盖，降低人力成本，<span class="highlight">准确率99%</span>。</li>
+                            <li>基于Contours、morphologyEx、Sift等传统视觉算法，为Duck Head、Microphone设计图像校验方案，识别可靠性测试样本异常，<span class="highlight">准确率95%</span>。</li>
+                            <li>基于ResNet18搭建神经网络模型，对iPhone Material拉力实验样本自动分类，<span class="highlight">A级分类准确率80%</span>。</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <h3 class="project-title">Apple | 生产数据可视化平台</h3>
+                    <div class="project-content">
+                        <p>主导两家供应商Duck Head生产数据可视化平台的全流程建设，实现产品质量、产线稳定性、投入产出与审核状态的实时监控。</p>
+                        <li>设计并开发I-MR控制图、良率与参数监控、尺寸分布与CPK分析及异常实时报警等核心功能。</li>
+                        <li>负责跨部门需求对接、网页设计、数据库设计与迁移，以及基于Flask + Plotly的后端与可视化开发。</li>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <h3 class="project-title">创迹软件 | 推荐算法：智能购物车优惠券推荐</h3>
+                    <div class="project-content">
+                        <p>针对带屏智能购物车设计优惠券推荐算法，基于会员、商品及消费数据搭建双塔模型，实现购物场景下的精准优惠券推送。</p>
+                        <p><strong>模型效果：</strong>试用阶段推荐人群优惠券使用率较未推荐人群<span class="highlight">提升38%</span>。</p>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <h3 class="project-title">创迹软件 | 时间序列与关联分析：商品与进货策略</h3>
+                    <div class="project-content">
+                        <p>基于Apriori算法挖掘商品关联关系，设计促销活动并通过假设检验验证效果，带动特定产品销售额<span class="highlight">同比提升2%~8%</span>。</p>
+                        <p>分析季节性商品销售周期及影响因素，基于Prophet时间序列模型完成销量预测，输出进货时间与进货量建议。</p>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <h3 class="project-title">青岛中瑞 | 风控算法与UBI模型</h3>
+                    <div class="project-content">
+                        <li><strong>风控模型：</strong>基于GPS数据提取车主里程、驾驶时段与行驶行为特征，构建逾期风险预测模型，<span class="highlight">高风险车主预测准确率60%+</span>。</li>
+                        <li><strong>UBI出险模型：</strong>构建UBI出险预测模型，基于驾驶行为特征预测出险概率，支撑保险客户差异化定价，<span class="highlight">高风险车主出险预测准确率20%+</span>。</li>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <h3 class="project-title">青岛中瑞 | 用户画像系统与数据产品</h3>
+                    <div class="project-content">
+                        <li>构建车主画像指标体系，涵盖驾驶量、驾驶行为、停留POI、路线与时长稳定性等维度，对车主进行标签化与评分。</li>
+                        <li>设计青岛渣土车监管大数据看板，实现ADAS数据实时监管，对高风险用车与渣土侧漏车辆进行智能预警。</li>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 个人技能 -->
+            <div class="section">
+                <h2 class="section-title">个人技能</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4>编程语言</h4>
+                        <p>Python (pandas / numpy / PyTorch / scikit-learn / OpenCV / Flask)、R语言</p>
+                    </div>
+                    <div class="skill-category">
+                        <h4>算法方向</h4>
+                        <p>自然语言处理、大模型微调、RAG系统开发与优化、机器学习、异常检测、推荐算法、时间序列分析</p>
+                    </div>
+                    <div class="skill-category">
+                        <h4>计算机视觉</h4>
+                        <p>传统视觉算法与深度学习模型</p>
+                    </div>
+                    <div class="skill-category">
+                        <h4>系统与工程</h4>
+                        <p>Flask Web开发、Milvus / MySQL数据库、Linux环境</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 优势介绍 -->
+            <div class="section">
+                <h2 class="section-title">优势介绍</h2>
+                <div class="advantage-grid">
+                    <div class="advantage-card">
+                        <h4>独立的数据处理到算法开发与应用全流程经验</h4>
+                        <p>在苹果公司任职期间，独立负责多产品线的数据处理、算法开发与应用全流程，涵盖NLP、CV、统计分析等多个领域，具备从0到1的项目落地能力。</p>
+                    </div>
+                    <div class="advantage-card">
+                        <h4>快速学习并应用新技术的能力</h4>
+                        <p>持续关注前沿技术，可在短时间内学习新技术，并在产出可工程化落地的高质量算法。</p>
+                    </div>
+                    <div class="advantage-card">
+                        <h4>丰富的跨行业算法实践经验</h4>
+                        <p>车联网 / 零售 / 制造业 / 轨道交通多行业算法实践，具备快速理解业务场景并提供算法解决方案的能力。</p>
+                    </div>
+                    <div class="advantage-card">
+                        <h4>优秀的英语能力</h4>
+                        <p>英语CET-6 (522分)，具备流利读写能力，可作为工作语言。能够独立阅读英文技术文档，第一时间获取行业先进技术信息。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 项目介绍按钮 -->
+            <div class="section" style="text-align: center;">
+                <button class="project-btn" onclick="showProjects()">查看项目介绍</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 项目介绍弹窗 -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeProjects()">&times;</span>
+            <h2 style="color: #667eea; margin-bottom: 30px;">Project Details</h2>
+
+            <div id="slidesContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        let slideTitles = {};
+
+        // 动态加载titles.json
+        async function loadTitlesFromJSON() {
+            try {
+                const response = await fetch('slides/titles.json');
+                slideTitles = await response.json();
+            } catch (error) {
+                console.error('Failed to load titles.json:', error);
+                // 使用默认标题作为后备
+                slideTitles = {
+                    "4": "Data Audit: Algorithm to Find Duplicate&offset Data",
+                    "5": "Data Audit: Algorithm to Find Repeat Sequence",
+                    "7": "Monte Carlo Simulation",
+                    "8": "Monte Carlo Simulation",
+                    "10": "T Test",
+                    "12": "PCA",
+                    "13": "Natural Language Processing",
+                    "15": "Dynamic audit",
+                    "16": "Dynamic audit",
+                    "17": "Dynamic audit",
+                    "19": "Grammar Modification",
+                    "20": "Grammar Modification",
+                    "21": "Grammar Modification",
+                    "24": "Visual Inspection",
+                    "25": "Visual Inspection",
+                    "27": "Image Consistency",
+                    "29": "Tensile test samples Classification",
+                    "32": "Project in March",
+                    "33": "Web Development",
+                    "34": "Web Development",
+                    "35": "Web Development",
+                    "36": "Web Development",
+                    "37": "Web Development",
+                    "39": "Video Substitle Generation"
+                };
+            }
+        }
+
+        function loadSlides() {
+            const container = document.getElementById('slidesContainer');
+            container.innerHTML = '';
+
+            const slideNumbers = Object.keys(slideTitles).map(Number).sort((a, b) => a - b);
+
+            let i = 0;
+            while (i < slideNumbers.length) {
+                const currentSlide = slideNumbers[i];
+                const currentTitle = slideTitles[currentSlide.toString()];
+
+                // 收集相同标题的连续幻灯片
+                const sameSlides = [currentSlide];
+                let j = i + 1;
+                while (j < slideNumbers.length && slideTitles[slideNumbers[j].toString()] === currentTitle) {
+                    sameSlides.push(slideNumbers[j]);
+                    j++;
+                }
+
+                // 创建标题和图片组
+                const slideDiv = document.createElement('div');
+                slideDiv.className = 'slide-item';
+
+                const title = document.createElement('h3');
+                title.textContent = currentTitle;
+                slideDiv.appendChild(title);
+
+                // 添加所有相同标题的图片
+                sameSlides.forEach(slideNum => {
+                    const img = document.createElement('img');
+                    const slideNumStr = slideNum.toString().padStart(3, '0');
+                    img.src = `slides/slides.${slideNumStr}.png`;
+                    img.alt = currentTitle;
+                    img.loading = 'lazy';
+                    img.style.marginBottom = '15px';
+                    slideDiv.appendChild(img);
+                });
+
+                container.appendChild(slideDiv);
+
+                i = j;
+            }
+        }
+
+        async function showProjects() {
+            await loadTitlesFromJSON();
+            loadSlides();
+            document.getElementById('projectModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProjects() {
+            document.getElementById('projectModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('projectModal');
+            if (event.target === modal) {
+                closeProjects();
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeProjects();
+            }
+        });
+    </script>
+
+    <!-- 密码验证脚本 -->
+    <script>
+        // 密码的SHA-256哈希值（密码：resume2026）
+        const PASSWORD_HASH = 'c5a656f1ac082a1f7ff4d1c931f88a5b87b6580b8ccd8d5611694340222f818d';
+
+        // 检查是否已验证
+        if (sessionStorage.getItem('auth') === 'verified') {
+            document.getElementById('authOverlay').style.display = 'none';
+            document.getElementById('mainContent').classList.remove('content-hidden');
+        }
+
+        // SHA-256哈希函数
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        // 验证密码
+        async function verifyPassword() {
+            const input = document.getElementById('passwordInput').value;
+            const hash = await sha256(input);
+
+            if (hash === PASSWORD_HASH) {
+                sessionStorage.setItem('auth', 'verified');
+                document.getElementById('authOverlay').style.display = 'none';
+                document.getElementById('mainContent').classList.remove('content-hidden');
+                document.getElementById('authError').style.display = 'none';
+            } else {
+                document.getElementById('authError').style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        // 回车键提交
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyPassword();
+            }
+        });
+
+        // 基本防护措施
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+    </div>
+</body>
+</html>
